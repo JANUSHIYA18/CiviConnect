@@ -5,6 +5,9 @@ import { CreditCard, QrCode, ArrowRight, IndianRupee, CheckCircle2 } from "lucid
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import KioskLayout from "@/components/kiosk/KioskLayout";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const mockBillData: Record<string, { name: string; amount: number; account: string; dueDate: string; period: string }> = {
   electricity: { name: "Electricity Bill", amount: 2450, account: "ELEC-29384756", dueDate: "15 Mar 2026", period: "Feb 2026" },
@@ -18,8 +21,10 @@ const mockBillData: Record<string, { name: string; amount: number; account: stri
 const PaymentScreen = () => {
   const navigate = useNavigate();
   const { serviceId } = useParams();
+  const { user } = useAuth();
   const [step, setStep] = useState<"lookup" | "review" | "processing" | "done">("lookup");
   const [accountId, setAccountId] = useState("");
+  const [txnRef, setTxnRef] = useState("");
 
   const bill = mockBillData[serviceId || "electricity"] || mockBillData.electricity;
 
@@ -27,8 +32,29 @@ const PaymentScreen = () => {
     if (accountId.length > 0) setStep("review");
   };
 
-  const handlePay = () => {
+  const handlePay = async () => {
     setStep("processing");
+    try {
+      if (user) {
+        const { data, error } = await supabase.from("transactions").insert({
+          user_id: user.id,
+          service_type: serviceId || "electricity",
+          account_id: accountId || bill.account,
+          amount: bill.amount,
+          status: "completed",
+          bill_period: bill.period,
+        }).select("transaction_ref").single();
+
+        if (error) {
+          toast.error("Payment recording failed");
+          console.error(error);
+        } else {
+          setTxnRef(data.transaction_ref);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
     setTimeout(() => setStep("done"), 2000);
   };
 
@@ -132,7 +158,7 @@ const PaymentScreen = () => {
                 <CheckCircle2 className="h-20 w-20 text-accent mx-auto" />
               </motion.div>
               <h2 className="text-2xl font-bold text-card-foreground mb-2">Payment Successful!</h2>
-              <p className="text-muted-foreground mb-1">Transaction ID: TXN-{Date.now().toString().slice(-8)}</p>
+              <p className="text-muted-foreground mb-1">Transaction ID: {txnRef || "TXN-" + Date.now().toString().slice(-8)}</p>
               <p className="text-muted-foreground mb-6">
                 <span className="font-semibold text-primary flex items-center justify-center gap-1">
                   <IndianRupee className="h-4 w-4" />
