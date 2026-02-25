@@ -15,6 +15,8 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        kiosk: "kiosk-amber-gradient text-primary-foreground font-bold text-lg rounded-xl kiosk-card-shadow hover:scale-105 transition-transform touch-target",
+        kioskOutline: "border-2 border-primary bg-card text-primary font-semibold text-lg rounded-xl hover:bg-primary hover:text-primary-foreground transition-all touch-target",
       },
       size: {
         default: "h-10 px-4 py-2",
