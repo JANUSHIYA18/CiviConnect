@@ -14,7 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      complaints: {
+        Row: {
+          complaint_ref: string
+          created_at: string
+          description: string
+          id: string
+          service_type: string
+          status: string
+          subject: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          complaint_ref?: string
+          created_at?: string
+          description: string
+          id?: string
+          service_type: string
+          status?: string
+          subject: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          complaint_ref?: string
+          created_at?: string
+          description?: string
+          id?: string
+          service_type?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      kiosk_sessions: {
+        Row: {
+          ended_at: string | null
+          id: string
+          language: string
+          services_accessed: string[] | null
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          ended_at?: string | null
+          id?: string
+          language?: string
+          services_accessed?: string[] | null
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          ended_at?: string | null
+          id?: string
+          language?: string
+          services_accessed?: string[] | null
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          account_id: string
+          amount: number
+          bill_period: string | null
+          created_at: string
+          id: string
+          service_type: string
+          status: string
+          transaction_ref: string
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          amount: number
+          bill_period?: string | null
+          created_at?: string
+          id?: string
+          service_type: string
+          status?: string
+          transaction_ref?: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          bill_period?: string | null
+          created_at?: string
+          id?: string
+          service_type?: string
+          status?: string
+          transaction_ref?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
