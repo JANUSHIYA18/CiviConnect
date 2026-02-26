@@ -9,6 +9,7 @@ import LanguageScreen from "./pages/LanguageScreen";
 import AuthScreen from "./pages/AuthScreen";
 import ServicesScreen from "./pages/ServicesScreen";
 import PaymentScreen from "./pages/PaymentScreen";
+import PresentationScreen from "./pages/PresentationScreen";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/auth" element={<AuthScreen />} />
             <Route path="/services" element={<ServicesScreen />} />
             <Route path="/payment/:serviceId" element={<PaymentScreen />} />
+            <Route path="/presentation" element={<PresentationScreen />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
