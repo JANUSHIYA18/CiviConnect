@@ -6,52 +6,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import KioskLayout from "@/components/kiosk/KioskLayout";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 
 const AuthScreen = () => {
   const navigate = useNavigate();
+  const { setDemoUser } = useAuth();
   const [step, setStep] = useState<"phone" | "otp">("phone");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fullPhone = phone.startsWith("+") ? phone : `+91${phone}`;
+  const fullPhone = `+91${phone}`;
 
   const handleSendOtp = async () => {
     if (phone.length < 10) return;
     setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOtp({ phone: fullPhone });
-      if (error) {
-        toast.error(error.message);
-      } else {
-        toast.success("OTP sent to " + fullPhone);
-        setStep("otp");
-      }
-    } finally {
+    // Demo mode: simulate OTP send
+    setTimeout(() => {
+      toast.success("OTP sent to " + fullPhone + " (Demo: enter any 6 digits)");
+      setStep("otp");
       setLoading(false);
-    }
+    }, 800);
   };
 
   const handleVerifyOtp = async () => {
     if (otp.length < 6) return;
     setLoading(true);
-    try {
-      const { error } = await supabase.auth.verifyOtp({
-        phone: fullPhone,
-        token: otp,
-        type: "sms",
-      });
-      if (error) {
-        toast.error(error.message);
-      } else {
-        toast.success("Verified successfully!");
-        navigate("/services");
-      }
-    } finally {
+    // Demo mode: accept any 6-digit OTP
+    setTimeout(() => {
+      setDemoUser(fullPhone);
+      toast.success("Verified successfully!");
+      navigate("/services");
       setLoading(false);
-    }
+    }, 1000);
   };
 
   return (
@@ -144,6 +132,10 @@ const AuthScreen = () => {
                 </div>
               </>
             )}
+
+            <p className="mt-4 text-xs text-center text-muted-foreground/60">
+              Demo mode — any 6-digit code is accepted
+            </p>
           </div>
         </motion.div>
       </div>
