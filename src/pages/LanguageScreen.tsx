@@ -1,30 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import KioskLayout from "@/components/kiosk/KioskLayout";
+import { useLanguage, LangCode } from "@/contexts/LanguageContext";
 
 const languages = [
-  { code: "en", name: "English", native: "English", flag: "🇬🇧" },
-  { code: "hi", name: "Hindi", native: "हिन्दी", flag: "🇮🇳" },
-  { code: "mr", name: "Marathi", native: "मराठी", flag: "🇮🇳" },
-  { code: "ta", name: "Tamil", native: "தமிழ்", flag: "🇮🇳" },
+  { code: "en" as LangCode, name: "English", native: "English", flag: "🇬🇧" },
+  { code: "hi" as LangCode, name: "Hindi", native: "हिन्दी", flag: "🇮🇳" },
+  { code: "mr" as LangCode, name: "Marathi", native: "मराठी", flag: "🇮🇳" },
+  { code: "ta" as LangCode, name: "Tamil", native: "தமிழ்", flag: "🇮🇳" },
 ];
 
 const LanguageScreen = () => {
   const navigate = useNavigate();
+  const { setLang, t } = useLanguage();
 
-  const handleSelect = (code: string) => {
+  const handleSelect = (code: LangCode) => {
+    setLang(code);
     navigate("/auth");
   };
 
   return (
     <KioskLayout showHeader={false}>
       <div className="flex flex-1 flex-col items-center justify-center kiosk-hero-gradient px-6 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-2 text-center"
-        >
-          <h1 className="text-3xl font-bold text-primary-foreground mb-1">Select Your Language</h1>
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-2 text-center">
+          <h1 className="text-3xl font-bold text-primary-foreground mb-1">{t("select_language")}</h1>
           <p className="text-primary-foreground/70 text-lg">अपनी भाषा चुनें</p>
         </motion.div>
 
