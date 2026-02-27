@@ -77,6 +77,42 @@ export type Database = {
         }
         Relationships: []
       }
+      service_requests: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          request_ref: string
+          request_type: string
+          service_category: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          request_ref?: string
+          request_type: string
+          service_category: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          request_ref?: string
+          request_type?: string
+          service_category?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           account_id: string
