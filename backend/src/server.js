@@ -8,15 +8,17 @@ import { handleStripeWebhook } from "./stripeWebhook.js";
 import { ensureResidentProfiles } from "./seedResidentProfiles.js";
 
 const app = express();
+const configuredOrigins = new Set(config.clientOrigins);
 
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
       if (config.nodeEnv !== "production") return callback(null, true);
-      const isConfiguredOrigin = origin === config.clientOrigin;
+      const isConfiguredOrigin = configuredOrigins.has(origin) || origin === config.clientOrigin;
       const isLocalDevOrigin = /^http:\/\/localhost:\d+$/.test(origin) || /^http:\/\/127\.0\.0\.1:\d+$/.test(origin);
-      if (isConfiguredOrigin || isLocalDevOrigin) {
+      const isVercelOrigin = /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
+      if (isConfiguredOrigin || isLocalDevOrigin || (config.allowVercelPreviewOrigins && isVercelOrigin)) {
         return callback(null, true);
       }
       return callback(new Error("Not allowed by CORS"));
