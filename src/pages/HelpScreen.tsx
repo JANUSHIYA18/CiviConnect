@@ -5,11 +5,13 @@ import KioskLayout from "@/components/kiosk/KioskLayout";
 import { Button } from "@/components/ui/button";
 import { apiRequest } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { HelpItem } from "@/types/api";
 
 const HelpScreen = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [items, setItems] = useState<HelpItem[]>([]);
   const [error, setError] = useState("");
 
@@ -21,15 +23,15 @@ const HelpScreen = () => {
 
     apiRequest<{ help: HelpItem[] }>("/me/help")
       .then((data) => setItems(data.help || []))
-      .catch((e) => setError(e instanceof Error ? e.message : "Could not load help"));
-  }, [user, navigate]);
+      .catch((e) => setError(e instanceof Error ? e.message : t("error_load_help")));
+  }, [user, navigate, t]);
 
   return (
-    <KioskLayout title="Help Center" subtitle="Support & Guidance" showLogout>
+    <KioskLayout title={t("menu_help")} subtitle={t("subtitle_support_guidance")} showLogout>
       <div className="mx-auto w-full max-w-5xl px-6 py-8">
         <div className="mb-4">
           <Button variant="kioskOutline" onClick={() => navigate("/services")}>
-            Back to Services
+            {t("back_to_services")}
           </Button>
         </div>
         {error && <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p>}
@@ -39,11 +41,11 @@ const HelpScreen = () => {
             <section className="rounded-2xl border border-border bg-card p-6">
               <h2 className="mb-2 flex items-center gap-2 text-xl font-bold">
                 <Headset className="h-5 w-5 text-primary" />
-                Contact Channels
+                {t("contact_channels")}
               </h2>
-              <p className="text-sm text-muted-foreground">Helpline: 1800-123-4545 (24x7) • Email: helpdesk@suvidhaone.in</p>
+              <p className="text-sm text-muted-foreground">{t("support_contact_line")}</p>
               <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4" /> Response SLA: 4 working hours
+                <Mail className="h-4 w-4" /> {t("support_sla")}
               </p>
             </section>
 

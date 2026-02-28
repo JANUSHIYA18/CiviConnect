@@ -56,7 +56,7 @@ const AuthScreen = () => {
       toast.success(t("verified_success"));
       navigate("/services");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Aadhaar verification failed");
+      toast.error(error instanceof Error ? error.message : t("aadhaar_verification_failed"));
     } finally {
       setLoading(false);
     }
@@ -94,7 +94,7 @@ const AuthScreen = () => {
       toast.success(t("verified_success"));
       navigate("/services");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Aadhaar verification failed");
+      toast.error(error instanceof Error ? error.message : t("aadhaar_verification_failed"));
     } finally {
       setLoading(false);
     }
@@ -152,14 +152,14 @@ const AuthScreen = () => {
                     {loading ? t("sending_otp") : t("send_otp")}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <div className="text-center text-sm text-muted-foreground">OR</div>
+                  <div className="text-center text-sm text-muted-foreground">{t("or")}</div>
                   <Button
                     variant="outline"
                     className="w-full h-12"
                     onClick={handleAadhaarLogin}
                     disabled={aadhaar.length !== 12 || loading}
                   >
-                    {loading ? "Verifying..." : "Continue with Aadhaar"}
+                    {loading ? t("verifying") : t("continue_with_aadhaar")}
                   </Button>
                 </div>
               </>
@@ -191,10 +191,10 @@ const AuthScreen = () => {
                     {loading ? t("verifying") : t("verify_continue")}
                     <LogIn className="ml-2 h-5 w-5" />
                   </Button>
-                  <div className="text-center text-sm text-muted-foreground">OR</div>
+                  <div className="text-center text-sm text-muted-foreground">{t("or")}</div>
                   <Input
                     type="text"
-                    placeholder="Enter 12-digit Aadhaar"
+                    placeholder={t("enter_12_digit_aadhaar")}
                     value={aadhaar}
                     onChange={(e) => setAadhaar(e.target.value.replace(/\D/g, "").slice(0, 12))}
                     className="h-12 rounded-xl"
@@ -206,7 +206,7 @@ const AuthScreen = () => {
                     onClick={handleVerifyAadhaar}
                     disabled={aadhaar.length !== 12 || loading}
                   >
-                    {loading ? "Verifying..." : "Verify with Aadhaar"}
+                    {loading ? t("verifying") : t("verify_with_aadhaar")}
                   </Button>
                   <button
                     onClick={() => {

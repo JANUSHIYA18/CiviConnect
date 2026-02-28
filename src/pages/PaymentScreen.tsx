@@ -110,7 +110,7 @@ const PaymentScreen = () => {
         },
       });
       if (!data.sessionUrl) {
-        throw new Error("Could not create checkout session");
+        throw new Error(t("error_create_checkout_session"));
       }
       window.location.href = data.sessionUrl;
     } catch (e) {
@@ -135,7 +135,7 @@ const PaymentScreen = () => {
 
       navigate(`/payment/success?demo=1&transaction_ref=${encodeURIComponent(data.transactionRef)}`);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Could not complete demo payment");
+      toast.error(e instanceof Error ? e.message : t("error_demo_payment"));
       setStep("review");
     }
   };
@@ -158,7 +158,7 @@ const PaymentScreen = () => {
               <p className="text-muted-foreground text-center mb-6">{t("payment_scan_qr")}</p>
               <div className="space-y-4">
                 <Input
-                  placeholder="e.g., ELEC-29384756"
+                  placeholder={t("payment_account_placeholder")}
                   value={accountId}
                   onChange={(e) => setAccountId(e.target.value)}
                   className="h-12 text-lg rounded-xl text-center"
@@ -207,14 +207,14 @@ const PaymentScreen = () => {
                   <Button variant="kioskOutline" className="flex-1 h-14" onClick={() => setStep("lookup")}>
                     {t("back")}
                   </Button>
-                  <Button variant="kiosk" className="flex-1 h-14" onClick={handlePay}>
+                  <Button variant="kiosk" className="flex-1 h-14 px-3 text-sm !whitespace-normal break-words sm:text-base" onClick={handlePay}>
                     <CreditCard className="mr-2 h-5 w-5" />
                     {t("pay_with_stripe")}
                   </Button>
                 </div>
                 <Button variant="outline" className="w-full h-12" onClick={handleDemoSuccess}>
                   <FlaskConical className="mr-2 h-4 w-4" />
-                  Demo Success (No Charge)
+                  {t("demo_success_no_charge")}
                 </Button>
               </div>
             </div>
@@ -270,3 +270,4 @@ const PaymentScreen = () => {
 };
 
 export default PaymentScreen;
+

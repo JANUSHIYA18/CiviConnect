@@ -5,11 +5,13 @@ import KioskLayout from "@/components/kiosk/KioskLayout";
 import { Button } from "@/components/ui/button";
 import { apiRequest } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { NotificationItem } from "@/types/api";
 
 const NotificationsScreen = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [items, setItems] = useState<NotificationItem[]>([]);
   const [error, setError] = useState("");
 
@@ -21,15 +23,15 @@ const NotificationsScreen = () => {
 
     apiRequest<{ notifications: NotificationItem[] }>("/me/notifications")
       .then((data) => setItems(data.notifications || []))
-      .catch((e) => setError(e instanceof Error ? e.message : "Could not load notifications"));
-  }, [user, navigate]);
+      .catch((e) => setError(e instanceof Error ? e.message : t("error_load_notifications")));
+  }, [user, navigate, t]);
 
   return (
-    <KioskLayout title="Notifications" subtitle="Recent Alerts & Updates" showLogout>
+    <KioskLayout title={t("menu_notifications")} subtitle={t("subtitle_recent_alerts")} showLogout>
       <div className="mx-auto w-full max-w-5xl px-6 py-8">
         <div className="mb-4">
           <Button variant="kioskOutline" onClick={() => navigate("/services")}>
-            Back to Services
+            {t("back_to_services")}
           </Button>
         </div>
         {error && <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p>}
@@ -38,15 +40,15 @@ const NotificationsScreen = () => {
           <div className="space-y-6">
             <section className="grid gap-4 md:grid-cols-3">
               <div className="rounded-2xl border border-border bg-card p-5">
-                <p className="text-sm text-muted-foreground">Total notifications</p>
+                <p className="text-sm text-muted-foreground">{t("total_notifications")}</p>
                 <p className="text-3xl font-bold">{items.length}</p>
               </div>
               <div className="rounded-2xl border border-border bg-card p-5">
-                <p className="text-sm text-muted-foreground">Unread</p>
+                <p className="text-sm text-muted-foreground">{t("unread")}</p>
                 <p className="text-3xl font-bold">{items.filter((item) => !item.read).length}</p>
               </div>
               <div className="rounded-2xl border border-border bg-card p-5">
-                <p className="text-sm text-muted-foreground">Read</p>
+                <p className="text-sm text-muted-foreground">{t("read")}</p>
                 <p className="text-3xl font-bold">{items.filter((item) => item.read).length}</p>
               </div>
             </section>
@@ -64,7 +66,7 @@ const NotificationsScreen = () => {
                         item.read ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"
                       }`}
                     >
-                      {item.read ? "Read" : "New"}
+                      {item.read ? t("read") : t("new")}
                     </span>
                   </div>
                   <p className="text-sm text-foreground">{item.message}</p>
