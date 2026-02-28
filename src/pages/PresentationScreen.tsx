@@ -110,7 +110,7 @@ const PresentationScreen = () => {
   const prev = () => setCurrentSlide((s) => Math.max(s - 1, 0));
 
   return (
-    <KioskLayout title="Project Presentation" subtitle="SUVIDHA One">
+    <KioskLayout title="Project Presentation" subtitle="CiviConnect" showLogout>
       <div className="flex flex-1 flex-col">
         {/* Slide nav dots */}
         <div className="flex items-center justify-center gap-2 py-3 border-b border-border bg-card">
@@ -320,8 +320,8 @@ const PresentationScreen = () => {
                     {/* Fake header */}
                     <div className="kiosk-hero-gradient px-4 py-3 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-secondary flex items-center justify-center text-xs font-bold text-secondary-foreground">S1</div>
-                        <span className="text-sm font-bold text-primary-foreground">SUVIDHA One</span>
+                        <div className="h-8 w-8 rounded-lg bg-secondary flex items-center justify-center text-xs font-bold text-secondary-foreground">CC</div>
+                        <span className="text-sm font-bold text-primary-foreground">CiviConnect</span>
                       </div>
                       <span className="text-xs text-primary-foreground/70">Select Service</span>
                     </div>
@@ -357,7 +357,7 @@ const PresentationScreen = () => {
                     </div>
                     {/* Fake footer */}
                     <div className="border-t border-border px-4 py-2 flex justify-between text-[10px] text-muted-foreground">
-                      <span>SUVIDHA One — Unified Civic Utility Kiosk</span>
+                      <span>CiviConnect — Unified Civic Utility Kiosk</span>
                       <span>Powered by Smart City Initiative</span>
                     </div>
                   </div>
@@ -403,3 +403,5 @@ const PresentationScreen = () => {
 };
 
 export default PresentationScreen;
+
+

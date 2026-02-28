@@ -4,10 +4,10 @@ import KioskLayout from "@/components/kiosk/KioskLayout";
 import { useLanguage, LangCode } from "@/contexts/LanguageContext";
 
 const languages = [
-  { code: "en" as LangCode, name: "English", native: "English", flag: "🇬🇧" },
-  { code: "hi" as LangCode, name: "Hindi", native: "हिन्दी", flag: "🇮🇳" },
-  { code: "mr" as LangCode, name: "Marathi", native: "मराठी", flag: "🇮🇳" },
-  { code: "ta" as LangCode, name: "Tamil", native: "தமிழ்", flag: "🇮🇳" },
+  { code: "en" as LangCode, nameKey: "language_english", native: "English", flag: "🇬🇧" },
+  { code: "hi" as LangCode, nameKey: "language_hindi", native: "हिंदी", flag: "🇮🇳" },
+  { code: "mr" as LangCode, nameKey: "language_marathi", native: "मराठी", flag: "🇮🇳" },
+  { code: "ta" as LangCode, nameKey: "language_tamil", native: "தமிழ்", flag: "🇮🇳" },
 ];
 
 const LanguageScreen = () => {
@@ -24,7 +24,7 @@ const LanguageScreen = () => {
       <div className="flex flex-1 flex-col items-center justify-center kiosk-hero-gradient px-6 py-12">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-2 text-center">
           <h1 className="text-3xl font-bold text-primary-foreground mb-1">{t("select_language")}</h1>
-          <p className="text-primary-foreground/70 text-lg">अपनी भाषा चुनें</p>
+          <p className="text-primary-foreground/70 text-lg">{t("language_hint")}</p>
         </motion.div>
 
         <div className="mt-8 grid grid-cols-2 gap-5 w-full max-w-lg">
@@ -41,7 +41,7 @@ const LanguageScreen = () => {
             >
               <span className="text-4xl">{lang.flag}</span>
               <span className="text-xl font-bold text-card-foreground">{lang.native}</span>
-              <span className="text-sm text-muted-foreground">{lang.name}</span>
+              <span className="text-sm text-muted-foreground">{t(lang.nameKey)}</span>
             </motion.button>
           ))}
         </div>

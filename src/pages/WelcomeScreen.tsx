@@ -2,19 +2,20 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Zap, Flame, Building2, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const icons = [
-    { Icon: Zap, label: "Electricity", delay: 0.6 },
-    { Icon: Flame, label: "Gas", delay: 0.8 },
-    { Icon: Building2, label: "Municipal", delay: 1.0 },
+    { Icon: Zap, label: t("service_electricity"), delay: 0.6 },
+    { Icon: Flame, label: t("service_gas"), delay: 0.8 },
+    { Icon: Building2, label: t("service_municipal"), delay: 1.0 },
   ];
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center kiosk-hero-gradient px-6 relative overflow-hidden">
-      {/* Background circles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-secondary/10" />
         <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-accent/10" />
@@ -26,14 +27,13 @@ const WelcomeScreen = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative z-10 flex flex-col items-center text-center"
       >
-        {/* Logo */}
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
           className="mb-6 flex h-24 w-24 items-center justify-center rounded-2xl bg-secondary font-bold text-secondary-foreground text-3xl kiosk-card-shadow"
         >
-          S1
+          CC
         </motion.div>
 
         <motion.h1
@@ -42,7 +42,7 @@ const WelcomeScreen = () => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="mb-2 text-5xl font-extrabold tracking-tight text-primary-foreground"
         >
-          SUVIDHA One
+          {t("app_name")}
         </motion.h1>
 
         <motion.p
@@ -51,10 +51,9 @@ const WelcomeScreen = () => {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="mb-8 max-w-md text-lg text-primary-foreground/80"
         >
-          Your Unified Smart Kiosk for Urban Civic Utility Services
+          {t("welcome_subtitle")}
         </motion.p>
 
-        {/* Service icons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -77,7 +76,6 @@ const WelcomeScreen = () => {
           ))}
         </motion.div>
 
-        {/* CTA */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -89,11 +87,10 @@ const WelcomeScreen = () => {
             className="h-16 px-12 text-xl animate-pulse-glow"
             onClick={() => navigate("/language")}
           >
-            Touch to Begin
+            {t("touch_to_begin")}
           </Button>
         </motion.div>
 
-        {/* Security badge */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -101,7 +98,7 @@ const WelcomeScreen = () => {
           className="mt-8 flex items-center gap-2 text-primary-foreground/50 text-sm"
         >
           <Shield className="h-4 w-4" />
-          <span>AES-256 Encrypted • PCI DSS Compliant</span>
+          <span>{t("security_badge")}</span>
         </motion.div>
       </motion.div>
     </div>
@@ -109,3 +106,4 @@ const WelcomeScreen = () => {
 };
 
 export default WelcomeScreen;
+

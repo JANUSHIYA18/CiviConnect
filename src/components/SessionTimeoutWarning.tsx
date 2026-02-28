@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Props {
   show: boolean;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const SessionTimeoutWarning = ({ show, secondsLeft, onContinue }: Props) => {
+  const { t } = useLanguage();
+
   return (
     <AnimatePresence>
       {show && (
@@ -25,12 +28,12 @@ const SessionTimeoutWarning = ({ show, secondsLeft, onContinue }: Props) => {
             className="rounded-2xl bg-card p-8 kiosk-card-shadow max-w-sm mx-4 text-center"
           >
             <Clock className="h-12 w-12 text-secondary mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-card-foreground mb-2">Session Timeout</h3>
+            <h3 className="text-xl font-bold text-card-foreground mb-2">{t("session_timeout")}</h3>
             <p className="text-muted-foreground mb-4">
-              Your session will expire in <span className="font-bold text-destructive text-lg">{secondsLeft}s</span>
+              {t("session_expires_in")} <span className="font-bold text-destructive text-lg">{secondsLeft}s</span>
             </p>
             <Button variant="kiosk" className="w-full h-14" onClick={onContinue}>
-              Continue Session
+              {t("continue_session")}
             </Button>
           </motion.div>
         </motion.div>

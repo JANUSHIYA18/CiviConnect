@@ -36,6 +36,38 @@ npm i
 npm run dev
 ```
 
+## Full-stack local run (Frontend + Backend)
+
+1. Install backend dependencies:
+
+```sh
+cd backend
+npm install
+```
+
+2. Configure backend env (`backend/.env`):
+
+```sh
+PORT=4000
+MONGO_URI=<your-mongodb-uri>
+JWT_SECRET=<your-secret>
+CLIENT_ORIGIN=http://localhost:5173
+NODE_ENV=development
+```
+
+3. Run backend:
+
+```sh
+cd backend
+npm run dev
+```
+
+4. Run frontend in another terminal:
+
+```sh
+npm run dev
+```
+
 **Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).
